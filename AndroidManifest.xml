@@ -2904,7 +2904,7 @@
         <provider
             android:name=".backup.BackupSettingsContentProvider"
             android:authorities="com.android.settings.backup.BackupSettingsContentProvider"
-	    android:exported="true">
+        android:exported="true">
         </provider>
 
         <activity android:name=".backup.UserBackupSettingsActivity"
@@ -2923,7 +2923,7 @@
             <meta-data android:name="com.android.settings.category"
                        android:value="com.android.settings.category.ia.system" />
             <meta-data android:name="com.android.settings.summary_uri"
-		       android:value="content://com.android.settings.backup.BackupSettingsContentProvider/summary" />
+               android:value="content://com.android.settings.backup.BackupSettingsContentProvider/summary" />
             <meta-data android:name="com.android.settings.order" android:value="-60"/>
         </activity>
 
@@ -3275,5 +3275,23 @@
         </activity>
 
         <!-- This is the longest AndroidManifest.xml ever. -->
+
+        <!-- CandyShop additions -->
+        <activity android:name=".Settings$CandyShopSettingsActivity"
+                android:label="@string/candyshop_title"
+                android:icon="@drawable/ic_settings_candyshop"
+                android:parentActivityName="com.android.settings">
+            <intent-filter android:priority="12">
+                <action android:name="com.android.settings.action.SETTINGS"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <meta-data android:name="com.android.settings.category"
+                       android:value="com.android.settings.category.ia.homepage"/>
+            <meta-data android:name="com.android.settings.FRAGMENT_CLASS"
+                       android:value="org.candy.candyshop.CandyShop"/>
+            <meta-data android:name="com.android.settings.summary"
+                       android:resource="@string/candyshop_summary_title"/>
+        </activity>
     </application>
 </manifest>
+

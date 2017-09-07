@@ -177,4 +177,7 @@ public class Settings extends SettingsActivity {
     public static class AccountDashboardActivity extends SettingsActivity {}
     public static class SystemDashboardActivity extends SettingsActivity {}
 
+    // CandyShop Additions.
+    public static class CandyShopSettingsActivity extends SettingsActivity {}
+
 }
