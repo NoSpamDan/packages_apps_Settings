@@ -383,14 +383,9 @@ public class SimStatusDialogController implements LifecycleObserver, OnResume, O
 
     private void updateIccidNumber() {
         final int subscriptionId = mSubscriptionInfo.getSubscriptionId();
-        final PersistableBundle carrierConfig =
-                mCarrierConfigManager.getConfigForSubId(subscriptionId);
-        // do not show iccid by default
-        boolean showIccId = false;
-        if (carrierConfig != null) {
-            showIccId = carrierConfig.getBoolean(
-                    CarrierConfigManager.KEY_SHOW_ICCID_IN_SIM_STATUS_BOOL);
-        }
+        final PersistableBundle carrierConfig = mCarrierConfigManager.getConfigForSubId(subscriptionId);
+        final boolean showIccId = carrierConfig.getBoolean(
+                CarrierConfigManager.KEY_SHOW_ICCID_IN_SIM_STATUS_BOOL);
         if (!showIccId) {
             mDialog.removeSettingFromScreen(ICCID_INFO_LABEL_ID);
             mDialog.removeSettingFromScreen(ICCID_INFO_VALUE_ID);

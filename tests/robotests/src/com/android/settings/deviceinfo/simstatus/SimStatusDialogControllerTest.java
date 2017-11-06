@@ -30,6 +30,10 @@ import static com.android.settings.deviceinfo.simstatus.SimStatusDialogControlle
 import static com.android.settings.deviceinfo.simstatus.SimStatusDialogController
         .IMS_REGISTRATION_STATE_VALUE_ID;
 import static com.android.settings.deviceinfo.simstatus.SimStatusDialogController
+        .ICCID_INFO_LABEL_ID;
+import static com.android.settings.deviceinfo.simstatus.SimStatusDialogController
+        .ICCID_INFO_VALUE_ID;
+import static com.android.settings.deviceinfo.simstatus.SimStatusDialogController
         .NETWORK_PROVIDER_VALUE_ID;
 import static com.android.settings.deviceinfo.simstatus.SimStatusDialogController
         .OPERATOR_INFO_LABEL_ID;
