@@ -55,12 +55,34 @@
         settings:controller="com.android.settings.deviceinfo.PhoneNumberPreferenceController"
         settings:enableCopying="true"/>
 
+    <!-- Phone number -->
+    <Preference
+        android:key="phone_number"
+        android:order="0"
+        android:title="@string/status_number"
+        android:summary="@string/summary_placeholder"
+        android:selectable="false"/>
+
     <Preference
         android:key="emergency_info"
         android:order="14"
         android:title="@string/emergency_info_title"
         android:summary="@string/summary_placeholder"
         settings:controller="com.android.settings.accounts.EmergencyInfoPreferenceController"/>
+
+    <!-- SIM status Sim Slot 1 -->
+    <Preference
+        android:key="sim_status_sim_1"
+        android:order="10"
+        android:title="@string/sim_status_title"
+        android:summary="@string/summary_placeholder"/>
+
+    <!-- SIM status Sim Slot 2 -->
+    <Preference
+        android:key="sim_status_sim_2"
+        android:order="11"
+        android:title="@string/sim_status_title_sim_slot_2"
+        android:summary="@string/summary_placeholder"/>
 
     <!-- Legal information -->
     <Preference
@@ -127,7 +149,7 @@
     <!--IP address -->
     <Preference
         android:key="wifi_ip_address"
-        android:order="44"
+        android:order="33"
         android:title="@string/wifi_ip_address"
         android:summary="@string/summary_placeholder"
         android:selectable="false"
@@ -137,7 +159,7 @@
     <!-- Wi-Fi MAC address -->
     <Preference
         android:key="wifi_mac_address"
-        android:order="45"
+        android:order="34"
         android:title="@string/status_wifi_mac_address"
         android:summary="@string/summary_placeholder"
         android:selectable="false"
@@ -146,7 +168,7 @@
     <!-- Bluetooth address -->
     <Preference
         android:key="bt_address"
-        android:order="46"
+        android:order="35"
         android:title="@string/status_bt_address"
         android:summary="@string/summary_placeholder"
         android:selectable="false"
@@ -171,9 +193,10 @@
     <!-- Feedback on the device -->
     <Preference
         android:key="device_feedback"
-        android:order="51"
+        android:order="41"
         android:title="@string/device_feedback"
-        settings:keywords="@string/keywords_device_feedback"/>
+        settings:keywords="@string/keywords_device_feedback"
+        android:summary="@string/summary_placeholder"/>
 
     <!-- Device FCC equipment id -->
     <Preference
@@ -181,11 +204,12 @@
         android:order="52"
         android:title="@string/fcc_equipment_id"
         android:summary="@string/summary_placeholder"/>
+    </Preference>
 
     <!-- Build number -->
     <Preference
         android:key="build_number"
-        android:order="53"
+        android:order="39"
         android:title="@string/build_number"
         android:summary="@string/summary_placeholder"
         settings:allowDividerAbove="true"
