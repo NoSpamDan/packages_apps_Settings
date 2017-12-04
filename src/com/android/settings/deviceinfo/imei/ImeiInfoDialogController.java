@@ -93,10 +93,6 @@ public class ImeiInfoDialogController {
      * Sets IMEI/MEID information based on whether the device is CDMA or GSM.
      */
     public void populateImeiInfo() {
-        if (mTelephonyManager == null) {
-            Log.w(TAG, "TelephonyManager for this slot is null. Invalid slot? id=" + mSlotId);
-            return;
-        }
         if (mTelephonyManager.getPhoneType() == TelephonyManager.PHONE_TYPE_CDMA) {
             updateDialogForCdmaPhone();
         } else {
