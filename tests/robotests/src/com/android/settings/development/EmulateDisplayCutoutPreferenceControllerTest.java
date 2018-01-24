@@ -22,7 +22,6 @@ import static org.mockito.AdditionalMatchers.aryEq;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -49,20 +48,16 @@ import java.util.Arrays;
 @RunWith(SettingsRobolectricTestRunner.class)
 public class EmulateDisplayCutoutPreferenceControllerTest {
 
-    private static final OverlayInfo ONE_DISABLED = createFakeOverlay("emulation.one", false, 1);
-    private static final OverlayInfo ONE_ENABLED = createFakeOverlay("emulation.one", true, 1);
-    private static final OverlayInfo TWO_DISABLED = createFakeOverlay("emulation.two", false, 2);
-    private static final OverlayInfo TWO_ENABLED = createFakeOverlay("emulation.two", true, 2);
+    static final OverlayInfo ONE_DISABLED = createFakeOverlay("emulation.one", false);
+    static final OverlayInfo ONE_ENABLED = createFakeOverlay("emulation.one", true);
+    static final OverlayInfo TWO_DISABLED = createFakeOverlay("emulation.two", false);
+    static final OverlayInfo TWO_ENABLED = createFakeOverlay("emulation.two", true);
 
-    @Mock
-    private Context mContext;
-    @Mock
-    private OverlayManagerWrapper mOverlayManager;
-    @Mock
-    private PackageManager mPackageManager;
-    @Mock
-    private ListPreference mPreference;
-    private EmulateDisplayCutoutPreferenceController mController;
+    @Mock Context mContext;
+    @Mock OverlayManagerWrapper mOverlayManager;
+    @Mock PackageManager mPackageManager;
+    @Mock ListPreference mPreference;
+    EmulateDisplayCutoutPreferenceController mController;
 
     @Before
     public void setUp() throws Exception {
@@ -99,8 +94,8 @@ public class EmulateDisplayCutoutPreferenceControllerTest {
 
         mController.onPreferenceChange(null, TWO_DISABLED.packageName);
 
-        verify(mOverlayManager)
-            .setEnabledExclusiveInCategory(eq(TWO_DISABLED.packageName), anyInt());
+        verify(mOverlayManager).setEnabledExclusiveInCategory(
+                eq(TWO_DISABLED.packageName), anyInt());
     }
 
     @Test

@@ -161,6 +161,11 @@ public class EmulateDisplayCutoutPreferenceController extends
     }
 
     @Override
+    protected void onDeveloperOptionsSwitchEnabled() {
+        mPreference.setEnabled(true);
+    }
+
+    @Override
     protected void onDeveloperOptionsSwitchDisabled() {
         super.onDeveloperOptionsSwitchDisabled();
         setEmulationOverlay("");
