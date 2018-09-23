@@ -51,18 +51,24 @@
     <string name="update_package" translatable="false">org.candy.updater</string>
     <string name="update_activity" translatable="false">org.candy.updater.UpdatesActivity</string>
 
-
     <!-- About phone screen, build date -->
     <string name="candy_version">"CandyRoms version"</string>
     <string name="build_date">Build date</string>
     <string name="build_date_default">2015-01-01-0000</string>
     <string name="keywords_build_date">build date, build info</string>
 
-
     <!-- SELinux status -->
     <string name="selinux_status">SELinux status</string>
     <string name="selinux_status_disabled">Disabled</string>
     <string name="selinux_status_permissive">Permissive</string>
     <string name="selinux_status_enforcing">Enforcing</string>
-    
+
+    <!-- Volume link notification -->
+    <string name="volume_link_notification_title">Link ring &amp; notification volumes</string>
+
+    <!-- Ambient display -->
+    <string name="ambient_display_category">Ambient options</string>
+    <string name="ambient_display_screen_summary_always_on">Show time, notification icons and other info. Increased battery usage.</string>
+    <string name="ambient_display_screen_summary_notifications">Wake screen when you receive notifications</string>
+
 </resources>
