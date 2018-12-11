@@ -77,7 +77,6 @@
     <string name="applying_theme_toast">Applying sweetness, please wait...</string>
     <string name="theme_applied_toast">Sweetness applied!</string>
     <string name="substratum_overlays_installed_title">Candy sweetness is unavailable because a Substratum overlay is installed. Please uninstall all overlays targeting Android System to proceed.</string>
-    <string name="systemui_theme_black">Black Licorice</string>
 
     <!-- QS tile styles -->
     <string name="qs_tile_style_title">QS tile style</string>

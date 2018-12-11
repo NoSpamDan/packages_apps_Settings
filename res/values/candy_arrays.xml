@@ -19,46 +19,6 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
-    <!-- System theme -->
-    <string-array name="system_theme_style_entries" translatable="false">
-        <item>@string/systemui_theme_wallpaper</item>
-        <item>@string/systemui_theme_light</item>
-        <item>@string/systemui_theme_dark</item>
-        <item>@string/systemui_theme_black</item>
-    </string-array>
-
-    <string-array name="system_theme_style_values" translatable="false">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-    </string-array>
-
-     <!-- QS tile styles -->
-    <string-array name="qs_tile_style_selector_entries" translatable="false">
-        <item>@string/qs_tile_style_default</item>
-        <item>@string/qs_tile_style_square</item>
-        <item>@string/qs_tile_style_squircle</item>
-        <item>@string/qs_tile_style_squircle_trim</item>
-        <item>@string/qs_tile_style_tear_drop</item>
-        <item>@string/qs_tile_style_hexagon</item>
-        <item>@string/qs_tile_style_hexicon</item>
-        <item>@string/qs_tile_style_circle_trim</item>
-        <item>@string/qs_tile_style_dual_tone_circle</item>
-    </string-array>
-
-    <string-array name="qs_tile_style_selector_values" translatable="false">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
-        <item>7</item>
-        <item>8</item>
-    </string-array>
-
     <!-- Less Notifications -->
     <string-array name="less_notification_sounds_entries">
         <item>@string/less_notification_sounds_default</item>
