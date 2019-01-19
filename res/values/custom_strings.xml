@@ -250,4 +250,8 @@
 
     <!-- Battery use screen. Battery status shown in chart label when charging from a VOOC source.  -->
     <string name="battery_info_status_vooc_charging">VOOC charging</string>
+
+    <!-- Battery temp -->
+    <string name="battery_temp_title">Battery temperature</string>
+    <string name="battery_temp_summary">Tap to switch scale</string>
 </resources>
