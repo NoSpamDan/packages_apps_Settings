@@ -117,6 +117,7 @@ public class ImeiInfoDialogController {
 
         if (mSubscriptionInfo != null && isCdmaLteEnabled()) {
             // Show IMEI for LTE device
+            // Show ICC ID and IMEI for LTE device
             mDialog.setText(ID_IMEI_VALUE,
                     getTextAsDigits(mTelephonyManager.getImei(mSlotId)));
             mDialog.setText(ID_IMEI_SV_VALUE,
