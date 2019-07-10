@@ -186,7 +186,7 @@
     <!-- Legal information -->
     <Preference
         android:key="legal_container"
-        android:order="5"
+        android:order="50"
         android:title="@string/legal_information"
         android:fragment="com.android.settings.LegalSettings"
         settings:allowDividerAbove="true"/>
