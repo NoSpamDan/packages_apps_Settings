@@ -55,14 +55,6 @@
         settings:controller="com.android.settings.deviceinfo.PhoneNumberPreferenceController"
         settings:enableCopying="true"/>
 
-    <!-- Phone number -->
-    <Preference
-        android:key="phone_number"
-        android:order="0"
-        android:title="@string/status_number"
-        android:summary="@string/summary_placeholder"
-        android:selectable="false"/>
-
     <Preference
         android:key="emergency_info"
         android:order="14"
