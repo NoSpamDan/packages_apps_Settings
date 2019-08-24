@@ -18,30 +18,26 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.Settings;
+import android.text.TextUtils;
 import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceScreen;
-import android.text.TextUtils;
+import android.provider.Settings;
 import android.widget.Toast;
 
 import com.android.settings.R;
-import com.android.settingslib.core.AbstractPreferenceController;
-import com.android.settings.core.PreferenceControllerMixin;
-import com.android.settingslib.drawer.SettingsDrawerActivity;
 
-import com.android.internal.util.candy.CandyUtils;
+import com.android.settingslib.core.AbstractPreferenceController;
+import com.android.settingslib.drawer.SettingsDrawerActivity;
 
 import libcore.util.Objects;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SystemThemePreferenceController extends AbstractPreferenceController implements
-        PreferenceControllerMixin, Preference.OnPreferenceChangeListener {
+        Preference.OnPreferenceChangeListener {
 
     private static final String SYSTEM_THEME = "system_theme_style";
-    private static final String SUBS_PACKAGE = "projekt.substratum";
-
     private ListPreference mSystemThemeStyle;
 
     public SystemThemePreferenceController(Context context) {
@@ -62,18 +58,14 @@ public class SystemThemePreferenceController extends AbstractPreferenceControlle
     public void displayPreference(PreferenceScreen screen) {
         super.displayPreference(screen);
         mSystemThemeStyle = (ListPreference) screen.findPreference(SYSTEM_THEME);
-        if (!CandyUtils.isPackageInstalled(mContext, SUBS_PACKAGE)) {
-            int systemThemeStyle = Settings.System.getInt(mContext.getContentResolver(),
-                    Settings.System.SYSTEM_THEME, 0);
-            int valueIndex = mSystemThemeStyle.findIndexOfValue(String.valueOf(systemThemeStyle));
-            mSystemThemeStyle.setValueIndex(valueIndex >= 0 ? valueIndex : 0);
-            mSystemThemeStyle.setSummary(mSystemThemeStyle.getEntry());
-            mSystemThemeStyle.setOnPreferenceChangeListener(this);
-        } else {
-            mSystemThemeStyle.setEnabled(false);
-            mSystemThemeStyle.setSummary(R.string.disable_themes_installed_title);
-        }
+        int systemThemeStyle = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.SYSTEM_THEME, 0);
+        int valueIndex = mSystemThemeStyle.findIndexOfValue(String.valueOf(systemThemeStyle));
+        mSystemThemeStyle.setValueIndex(valueIndex >= 0 ? valueIndex : 0);
+        mSystemThemeStyle.setSummary(mSystemThemeStyle.getEntry());
+        mSystemThemeStyle.setOnPreferenceChangeListener(this);
     }
+
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (preference == mSystemThemeStyle) {
