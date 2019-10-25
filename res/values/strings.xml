@@ -3136,8 +3136,6 @@
     <string name="scanning_status_text_wifi_off_ble_on">Bluetooth scanning is on, Wi\u2011Fi scanning is off</string>
     <!-- The status text when both Wi-Fi scanning and Bluetooth scanning are off. [CHAR LIMIT=100] -->
     <string name="scanning_status_text_wifi_off_ble_off">Both Wi\u2011Fi and Bluetooth scanning are off</string>
-    <!-- About phone screen, title for MEID for multi-sim devices -->
-    <string name="meid_multi_sim">MEID (sim slot %1$d)</string>
     <!-- About phone, status item title.  The phone MEID number of the current LTE/CDMA device. [CHAR LIMIT=30] -->
     <string name="status_meid_number">MEID</string>
     <!-- About phone, status item title.  The ICCID of the current LTE device. [CHAR LIMIT=30] -->

@@ -45,22 +45,31 @@
         android:summary="@string/summary_placeholder"
         settings:controller="com.android.settings.deviceinfo.BrandedAccountPreferenceController"/>
 
-    <!-- Phone number -->
-    <Preference
-        android:key="phone_number"
-        android:order="3"
-        android:title="@string/status_number"
-        android:summary="@string/summary_placeholder"
-        android:selectable="false"
-        settings:controller="com.android.settings.deviceinfo.PhoneNumberPreferenceController"
-        settings:enableCopying="true"/>
-
     <Preference
         android:key="emergency_info"
         android:order="14"
         android:title="@string/emergency_info_title"
         android:summary="@string/summary_placeholder"
         settings:controller="com.android.settings.accounts.EmergencyInfoPreferenceController"/>
+ 
+    <!-- Android version -->
+    <Preference
+        android:key="firmware_version"
+        android:order="15"
+        android:title="@string/firmware_version"
+        android:summary="@string/summary_placeholder"
+        android:fragment="com.android.settings.deviceinfo.firmwareversion.FirmwareVersionSettings"
+        settings:controller="com.android.settings.deviceinfo.firmwareversion.FirmwareVersionPreferenceController"/>
+
+    <!-- Build number -->
+    <Preference
+        android:key="build_number"
+        android:order="16"
+        android:title="@string/build_number"
+        android:summary="@string/summary_placeholder"
+        settings:allowDividerAbove="true"
+        settings:enableCopying="true"
+        settings:controller="com.android.settings.deviceinfo.BuildNumberPreferenceController"/>
 
     <!-- SIM status -->
     <Preference
@@ -81,28 +90,10 @@
         android:fragment="com.android.settings.deviceinfo.hardwareinfo.HardwareInfoFragment"
         settings:controller="com.android.settings.deviceinfo.HardwareInfoPreferenceController"/>
 
-    <!-- IMEI -->
-    <Preference
-        android:key="imei_info"
-        android:order="32"
-        android:title="@string/status_imei"
-        settings:keywords="@string/keywords_imei_info"
-        android:summary="@string/summary_placeholder"
-        settings:controller="com.android.settings.deviceinfo.imei.ImeiInfoPreferenceController"/>
-
-    <!-- Android version -->
-    <Preference
-        android:key="firmware_version"
-        android:order="42"
-        android:title="@string/firmware_version"
-        android:summary="@string/summary_placeholder"
-        android:fragment="com.android.settings.deviceinfo.firmwareversion.FirmwareVersionSettings"
-        settings:controller="com.android.settings.deviceinfo.firmwareversion.FirmwareVersionPreferenceController"/>
-
     <!--IP address -->
     <Preference
         android:key="wifi_ip_address"
-        android:order="33"
+        android:order="43"
         android:title="@string/wifi_ip_address"
         android:summary="@string/summary_placeholder"
         android:selectable="false"
@@ -112,7 +103,7 @@
     <!-- Wi-Fi MAC address -->
     <Preference
         android:key="wifi_mac_address"
-        android:order="34"
+        android:order="44"
         android:title="@string/status_wifi_mac_address"
         android:summary="@string/summary_placeholder"
         android:selectable="false"
@@ -121,7 +112,7 @@
     <!-- Bluetooth address -->
     <Preference
         android:key="bt_address"
-        android:order="35"
+        android:order="45"
         android:title="@string/status_bt_address"
         android:summary="@string/summary_placeholder"
         android:selectable="false"
@@ -135,39 +126,6 @@
         android:summary="@string/summary_placeholder"
         android:selectable="false"/>
 
-    <!-- Manual -->
-    <Preference
-        android:key="manual"
-        android:order="50"
-        android:title="@string/manual">
-        <intent android:action="android.settings.SHOW_MANUAL"/>
-    </Preference>
-
-    <!-- Feedback on the device -->
-    <Preference
-        android:key="device_feedback"
-        android:order="41"
-        android:title="@string/device_feedback"
-        settings:keywords="@string/keywords_device_feedback"
-        android:summary="@string/summary_placeholder"/>
-
-    <!-- Device FCC equipment id -->
-    <Preference
-        android:key="fcc_equipment_id"
-        android:order="52"
-        android:title="@string/fcc_equipment_id"
-        android:summary="@string/summary_placeholder"/>
-
-    <!-- Build number -->
-    <Preference
-        android:key="build_number"
-        android:order="39"
-        android:title="@string/build_number"
-        android:summary="@string/summary_placeholder"
-        settings:allowDividerAbove="true"
-        settings:enableCopying="true"
-        settings:controller="com.android.settings.deviceinfo.BuildNumberPreferenceController"/>
-
     <!-- SELinux status information -->
     <Preference
         android:key="selinux_status"
@@ -178,7 +136,7 @@
     <!-- Legal information -->
     <Preference
         android:key="legal_container"
-        android:order="50"
+        android:order="55"
         android:title="@string/legal_information"
         android:fragment="com.android.settings.LegalSettings"
         settings:allowDividerAbove="true"/>

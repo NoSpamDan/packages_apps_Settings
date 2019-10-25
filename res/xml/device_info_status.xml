@@ -33,22 +33,6 @@
         android:summary="@string/summary_placeholder"
         android:persistent="false" />
     <Preference
-        android:key="sim_status"
-        android:title="@string/sim_status_title"
-        android:persistent="false">
-        <intent
-            android:targetPackage="com.android.settings"
-            android:targetClass="com.android.settings.Settings$SimStatusActivity" />
-    </Preference>
-    <Preference
-        android:key="imei_info"
-        android:title="@string/imei_information_title"
-        android:persistent="false">
-        <intent
-            android:targetPackage="com.android.settings"
-            android:targetClass="com.android.settings.Settings$ImeiInformationActivity" />
-    </Preference>
-    <Preference
         android:key="wifi_ip_address"
         android:enabled="false"
         android:shouldDisableView="false"
