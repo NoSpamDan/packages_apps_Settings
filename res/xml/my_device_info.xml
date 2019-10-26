@@ -37,10 +37,20 @@
         settings:controller="com.android.settings.deviceinfo.DeviceNamePreferenceController"
         settings:enableCopying="true"/>
 
+    <!-- Model & hardware -->
+    <Preference
+        android:key="device_model"
+        android:order="2"
+        android:title="@string/hardware_info"
+        settings:keywords="@string/keywords_model_and_hardware"
+        android:summary="@string/summary_placeholder"
+        android:fragment="com.android.settings.deviceinfo.hardwareinfo.HardwareInfoFragment"
+        settings:controller="com.android.settings.deviceinfo.HardwareInfoPreferenceController"/>
+
     <!-- Account name -->
     <Preference
         android:key="branded_account"
-        android:order="2"
+        android:order="5"
         android:title="@string/my_device_info_account_preference_title"
         android:summary="@string/summary_placeholder"
         settings:controller="com.android.settings.deviceinfo.BrandedAccountPreferenceController"/>
@@ -51,15 +61,6 @@
         android:title="@string/emergency_info_title"
         android:summary="@string/summary_placeholder"
         settings:controller="com.android.settings.accounts.EmergencyInfoPreferenceController"/>
- 
-    <!-- Android version -->
-    <Preference
-        android:key="firmware_version"
-        android:order="15"
-        android:title="@string/firmware_version"
-        android:summary="@string/summary_placeholder"
-        android:fragment="com.android.settings.deviceinfo.firmwareversion.FirmwareVersionSettings"
-        settings:controller="com.android.settings.deviceinfo.firmwareversion.FirmwareVersionPreferenceController"/>
 
     <!-- Build number -->
     <Preference
@@ -70,30 +71,29 @@
         settings:allowDividerAbove="true"
         settings:enableCopying="true"
         settings:controller="com.android.settings.deviceinfo.BuildNumberPreferenceController"/>
+ 
+    <!-- Android version -->
+    <Preference
+        android:key="firmware_version"
+        android:order="17"
+        android:title="@string/firmware_version"
+        android:summary="@string/summary_placeholder"
+        android:fragment="com.android.settings.deviceinfo.firmwareversion.FirmwareVersionSettings"
+        settings:controller="com.android.settings.deviceinfo.firmwareversion.FirmwareVersionPreferenceController"/>
 
     <!-- SIM status -->
     <Preference
         android:key="sim_status"
-        android:order="18"
+        android:order="30"
         android:title="@string/sim_status_title"
         settings:keywords="@string/keywords_sim_status"
         android:summary="@string/summary_placeholder"
         settings:allowDividerAbove="true"/>
 
-    <!-- Model & hardware -->
-    <Preference
-        android:key="device_model"
-        android:order="31"
-        android:title="@string/hardware_info"
-        settings:keywords="@string/keywords_model_and_hardware"
-        android:summary="@string/summary_placeholder"
-        android:fragment="com.android.settings.deviceinfo.hardwareinfo.HardwareInfoFragment"
-        settings:controller="com.android.settings.deviceinfo.HardwareInfoPreferenceController"/>
-
     <!--IP address -->
     <Preference
         android:key="wifi_ip_address"
-        android:order="43"
+        android:order="40"
         android:title="@string/wifi_ip_address"
         android:summary="@string/summary_placeholder"
         android:selectable="false"
@@ -118,6 +118,13 @@
         android:selectable="false"
         settings:enableCopying="true"/>
 
+    <!-- SELinux status information -->
+    <Preference
+        android:key="selinux_status"
+        android:order="46"
+        android:title="@string/selinux_status"
+        android:summary="@string/selinux_status_enforcing"/>
+
     <!-- Device up time -->
     <Preference
         android:key="up_time"
@@ -126,18 +133,12 @@
         android:summary="@string/summary_placeholder"
         android:selectable="false"/>
 
-    <!-- SELinux status information -->
-    <Preference
-        android:key="selinux_status"
-        android:order="54"
-        android:title="@string/selinux_status"
-        android:summary="@string/selinux_status_enforcing"/>
-
     <!-- Legal information -->
     <Preference
         android:key="legal_container"
-        android:order="55"
+        android:order="54"
         android:title="@string/legal_information"
         android:fragment="com.android.settings.LegalSettings"
         settings:allowDividerAbove="true"/>
+
 </PreferenceScreen>
