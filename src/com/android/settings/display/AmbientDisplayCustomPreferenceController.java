@@ -16,7 +16,7 @@ package com.android.settings.display;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ComponentName;
-import android.support.v7.preference.Preference;
+import androidx.preference.Preference;
 
 import com.android.settings.R;
 import com.android.settingslib.core.AbstractPreferenceController;

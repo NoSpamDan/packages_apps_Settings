@@ -20,7 +20,8 @@ import android.content.Context;
 import android.os.UserHandle;
 import android.provider.SearchIndexableResource;
 
-import com.android.internal.hardware.AmbientDisplayConfiguration;
+import android.hardware.display.AmbientDisplayConfiguration;
+
 import com.android.internal.logging.nano.MetricsProto;
 import com.android.settings.R;
 import com.android.settings.dashboard.DashboardFragment;
