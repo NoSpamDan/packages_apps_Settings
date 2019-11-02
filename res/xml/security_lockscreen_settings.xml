@@ -104,6 +104,12 @@
             android:summary="@string/doze_summary"
             android:defaultValue="true" />
 
+        <SwitchPreference
+            android:key="pulse_on_new_tracks"
+            android:title="@string/pulse_on_new_tracks_title"
+            android:summary="@string/pulse_on_new_tracks_summary"
+            settings:controller="com.android.settings.display.PulseOnNewTracksPreferenceController" />
+
         <org.candy.candyshop.preference.SecureSettingSwitchPreference
             android:key="double_tap_to_wake"
             android:title="@string/tap_to_wake"
