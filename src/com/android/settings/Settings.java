@@ -179,4 +179,5 @@ public class Settings extends SettingsActivity {
 
     // Candy additions start
     //public static class CandyShopActivity extends SettingsActivity {}
+    public static class GesturesSettingsActivity extends SettingsActivity { /* empty */ }
 }
