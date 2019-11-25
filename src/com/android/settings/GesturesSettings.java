@@ -16,15 +16,40 @@
 
 package com.android.settings;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.res.Resources;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.SearchIndexableResource;
 import android.provider.Settings;
 import androidx.preference.Preference;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference.OnPreferenceChangeListener;
+import androidx.preference.Preference.OnPreferenceClickListener;
+import androidx.preference.PreferenceFragment;
+import androidx.preference.PreferenceScreen;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Switch;
 
+import com.android.internal.util.candy.ActionConstants;
+import com.android.internal.util.candy.AppHelper;
+import com.android.internal.util.candy.DeviceUtils;
+import com.android.internal.util.candy.DeviceUtils.FilteredDeviceFeaturesArray;
+import com.android.internal.util.candy.KernelControl;
+import com.android.internal.util.candy.ShortcutPickerHelper;
+import com.android.internal.util.candy.ShortcutPickerHelper.OnPickListener;
+
+import com.android.settings.R;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settings.search.Indexable;
 import com.android.settings.widget.SwitchBar;
@@ -35,9 +60,12 @@ import java.util.HashMap;
 import java.util.List;
 
 public class GesturesSettings extends SettingsPreferenceFragment implements
-        OnPreferenceChangeListener, Indexable {
+        OnPreferenceChangeListener, ShortcutPickerHelper.OnPickListener, Indexable {
 
     private static final String TAG = "GesturesSettings";
+
+    private static final String SETTINGS_METADATA_NAME = "com.android.settings";
+    //private static final String GESTURE_SETTINGS = "gestures_settings";
 
     private static final String KEY_DOUBLE_TAP = "double_tap";
     private static final String KEY_DRAW_V = "draw_v";
@@ -57,6 +85,11 @@ public class GesturesSettings extends SettingsPreferenceFragment implements
     private static final HashMap<String, Integer> mGesturesKeyCodes = new HashMap<>();
     private static final HashMap<String, Integer> mGesturesDefaults = new HashMap();
     private static final HashMap<String, String> mGesturesSettings = new HashMap();
+
+    private static final int DLG_SHOW_ACTION_DIALOG  = 0;
+    private static final int DLG_RESET_TO_DEFAULT    = 1;
+
+    private static final int MENU_RESET = Menu.FIRST;
 
     static {
         mGesturesKeyCodes.put(KEY_DOUBLE_TAP, com.android.internal.R.integer.config_doubleTapKeyCode);
@@ -111,6 +144,12 @@ public class GesturesSettings extends SettingsPreferenceFragment implements
 
     private GesturesEnabler mGesturesEnabler;
 
+    private SharedPreferences mScreenOffGestureSharedPreferences;
+
+    private ShortcutPickerHelper mPicker;
+    private String mPendingSettingsKey;
+    private static FilteredDeviceFeaturesArray sFinalActionDialogArray;
+
     @Override
     public int getMetricsCategory() {
         return -1;
@@ -128,6 +167,58 @@ public class GesturesSettings extends SettingsPreferenceFragment implements
                 removePreference(gestureKey);
             }
         }
+
+        mPicker = new ShortcutPickerHelper(getActivity(), this);
+
+        //mScreenOffGestureSharedPreferences = getActivity().getSharedPreferences(
+        //        GESTURE_SETTINGS, Activity.MODE_PRIVATE);
+
+        PackageManager pm = getActivity().getPackageManager();
+        Resources settingsResources = null;
+        try {
+            settingsResources = pm.getResourcesForApplication(SETTINGS_METADATA_NAME);
+        } catch (Exception e) {
+            return;
+        }
+
+        sFinalActionDialogArray = new FilteredDeviceFeaturesArray();
+        sFinalActionDialogArray = DeviceUtils.filterUnsupportedDeviceFeatures(getActivity(),
+                settingsResources.getStringArray(
+                        settingsResources.getIdentifier(SETTINGS_METADATA_NAME
+                        + ":array/gesture_values", null, null)),
+                settingsResources.getStringArray(
+                        settingsResources.getIdentifier(SETTINGS_METADATA_NAME
+                        + ":array/gesture_entries", null, null)));
+
+        setHasOptionsMenu(true);
+    }
+
+    private void setupOrUpdatePreference(Preference preference, String action) {
+        if (preference == null || action == null) {
+            return;
+        }
+
+        if (action.startsWith("**")) {
+            preference.setSummary(getDescription(action));
+        } else {
+            preference.setSummary(AppHelper.getFriendlyNameForUri(
+                    getActivity(), getActivity().getPackageManager(), action));
+        }
+        //preference.setOnPreferenceClickListener(this);
+    }
+
+    private String getDescription(String action) {
+        if (sFinalActionDialogArray == null || action == null) {
+            return null;
+        }
+        int i = 0;
+        for (String actionValue : sFinalActionDialogArray.values) {
+            if (action.equals(actionValue)) {
+                return sFinalActionDialogArray.entries[i];
+            }
+            i++;
+        }
+        return null;
     }
 
     @Override
@@ -181,6 +272,124 @@ public class GesturesSettings extends SettingsPreferenceFragment implements
     }
 
     @Override
+    public void shortcutPicked(String action,
+                String description, Bitmap bmp, boolean isApplication) {
+        if (mPendingSettingsKey == null || action == null) {
+            return;
+        }
+        mScreenOffGestureSharedPreferences.edit().putString(mPendingSettingsKey, action).commit();
+        //setupOrUpdatePreference(m);
+        mPendingSettingsKey = null;
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == ShortcutPickerHelper.REQUEST_PICK_SHORTCUT
+                    || requestCode == ShortcutPickerHelper.REQUEST_PICK_APPLICATION
+                    || requestCode == ShortcutPickerHelper.REQUEST_CREATE_SHORTCUT) {
+                mPicker.onActivityResult(requestCode, resultCode, data);
+
+            }
+        } else {
+            mPendingSettingsKey = null;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case MENU_RESET:
+                    showDialogInner(DLG_RESET_TO_DEFAULT, null, 0);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.add(0, MENU_RESET, 0, R.string.reset)
+                .setIcon(R.drawable.ic_settings_reset)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+    }
+
+    private void showDialogInner(int id, String settingsKey, int dialogTitle) {
+        DialogFragment newFragment =
+                MyAlertDialogFragment.newInstance(id, settingsKey, dialogTitle);
+        newFragment.setTargetFragment(this, 0);
+        newFragment.show(getFragmentManager(), "dialog " + id);
+    }
+
+    public static class MyAlertDialogFragment extends DialogFragment {
+
+        public static MyAlertDialogFragment newInstance(
+                int id, String settingsKey, int dialogTitle) {
+            MyAlertDialogFragment frag = new MyAlertDialogFragment();
+            Bundle args = new Bundle();
+            args.putInt("id", id);
+            args.putString("settingsKey", settingsKey);
+            args.putInt("dialogTitle", dialogTitle);
+            frag.setArguments(args);
+            return frag;
+        }
+
+        GesturesSettings getOwner() {
+            return (GesturesSettings) getTargetFragment();
+        }
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            int id = getArguments().getInt("id");
+            final String settingsKey = getArguments().getString("settingsKey");
+            int dialogTitle = getArguments().getInt("dialogTitle");
+            switch (id) {
+                case DLG_SHOW_ACTION_DIALOG:
+                    if (sFinalActionDialogArray == null) {
+                        return null;
+                    }
+                    return new AlertDialog.Builder(getActivity())
+                    .setTitle(dialogTitle)
+                    .setNegativeButton(R.string.cancel, null)
+                    .setItems(getOwner().sFinalActionDialogArray.entries,
+                        new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int item) {
+                            if (getOwner().sFinalActionDialogArray.values[item]
+                                    .equals(ActionConstants.ACTION_APP)) {
+                                if (getOwner().mPicker != null) {
+                                    getOwner().mPendingSettingsKey = settingsKey;
+                                    getOwner().mPicker.pickShortcut(getOwner().getId());
+                                }
+                            } else {
+                                getOwner().mScreenOffGestureSharedPreferences.edit()
+                                        .putString(settingsKey,
+                                        getOwner().sFinalActionDialogArray.values[item]).commit();
+                                //getOwner().setupOrUpdatePreference();
+                            }
+                        }
+                    })
+                    .create();
+                case DLG_RESET_TO_DEFAULT:
+                    return new AlertDialog.Builder(getActivity())
+                    .setTitle(R.string.reset)
+                    .setMessage(R.string.reset_message)
+                    .setNegativeButton(R.string.cancel, null)
+                    .setPositiveButton(R.string.dlg_ok,
+                        new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            getOwner().resetToDefault();
+                        }
+                    })
+                    .create();
+            }
+            throw new IllegalArgumentException("unknown id " + id);
+        }
+
+        @Override
+        public void onCancel(DialogInterface dialog) {
+        }
+    }
+
+    @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         Settings.System.putInt(getContentResolver(),
                 mGesturesSettings.get(preference.getKey()),
@@ -220,6 +429,32 @@ public class GesturesSettings extends SettingsPreferenceFragment implements
         public void teardownSwitchBar() {
             pause();
             mSwitchBar.hide();
+        }
+
+        // Reset all entries to default.
+        private void resetToDefault() {
+            SharedPreferences.Editor editor = mScreenOffGestureSharedPreferences.edit();
+
+            //mScreenOffGestureSharedPreferences.edit()
+            //      .putBoolean(PREF_GESTURE_ENABLE, true).commit();
+
+            mGesturesDefaults.put(KEY_DOUBLE_TAP, com.android.internal.R.integer.config_doubleTapDefault);
+            mGesturesDefaults.put(KEY_DRAW_V, com.android.internal.R.integer.config_drawVDefault);
+            mGesturesDefaults.put(KEY_DRAW_INVERSE_V, com.android.internal.R.integer.config_drawInverseVDefault);
+            mGesturesDefaults.put(KEY_DRAW_O, com.android.internal.R.integer.config_drawODefault);
+            mGesturesDefaults.put(KEY_DRAW_M, com.android.internal.R.integer.config_drawMDefault);
+            mGesturesDefaults.put(KEY_DRAW_W, com.android.internal.R.integer.config_drawWDefault);
+            mGesturesDefaults.put(KEY_DRAW_S, com.android.internal.R.integer.config_drawSDefault);
+            mGesturesDefaults.put(KEY_DRAW_ARROW_LEFT, com.android.internal.R.integer.config_drawArrowLeftDefault);
+            mGesturesDefaults.put(KEY_DRAW_ARROW_RIGHT, com.android.internal.R.integer.config_drawArrowRightDefault);
+            mGesturesDefaults.put(KEY_ONE_FINGER_SWIPE_UP, com.android.internal.R.integer.config_oneFingerSwipeUpDefault);
+            mGesturesDefaults.put(KEY_ONE_FINGER_SWIPE_RIGHT, com.android.internal.R.integer.config_oneFingerSwipeRightDefault);
+            mGesturesDefaults.put(KEY_ONE_FINGER_SWIPE_DOWN, com.android.internal.R.integer.config_oneFingerSwipeDownDefault);
+            mGesturesDefaults.put(KEY_ONE_FINGER_SWIPE_LEFT, com.android.internal.R.integer.config_oneFingerSwipeLeftDefault);
+            mGesturesDefaults.put(KEY_TWO_FINGER_SWIPE, com.android.internal.R.integer.config_twoFingerSwipeDefault);
+
+            KernelControl.enableGestures(true);
+            //setupOrUpdatePreference();
         }
 
         public void resume() {

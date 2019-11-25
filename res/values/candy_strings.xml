@@ -62,7 +62,7 @@
     <string name="selinux_status_disabled">Disabled</string>
     <string name="selinux_status_permissive">Permissive</string>
     <string name="selinux_status_enforcing">Enforcing</string>
-    
+
     <!-- Battery stats reset -->
     <string name="battery_stats_reset">Reset stats</string>
     <string name="battery_stats_message">Battery history stats are going to be reset</string>
@@ -121,4 +121,37 @@
     <!-- Density category -->
     <string name="density_category">Density options</string>
 
+    <!-- Gesture reset strings -->
+    <string name="dlg_ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="reset">Reset</string>
+    <string name="reset_message">Reset all entries to default?</string>
+
+     <!-- Notification slider -->
+    <string name="notification_slider">Additional buttons</string>
+    <string name="notification_slider_summary">Alert Slider Settings</string>
+    <string name="action">Action</string>
+
+    <string name="top_position">Top position</string>
+    <string name="middle_position">Middle position</string>
+    <string name="bottom_position">Bottom position</string>
+    <string name="total_silence">Total silence</string>
+    <string name="alarms_only">Alarms only</string>
+    <string name="priority_only">Priority only</string>
+    <string name="none">All notifications</string>
+    <string name="vibrate">Vibrate</string>
+    <string name="ring">Ring</string>
+
+    <string name="slider_mode_off">Off</string>
+    <string name="slider_mode_vibrate">Vibrate</string>
+    <string name="slider_mode_silent">Silent</string>
+    <string name="slider_mode_priority">Priority only</string>
+    <string name="slider_mode_alarm">Alarms only</string>
+    <string name="slider_mode_dnd">Total silence</string>
+    <string name="slider_mode_title_top">Top position</string>
+    <string name="slider_mode_title_center">Center position</string>
+    <string name="slider_mode_title_bottom">Bottom position</string>
+
+    <string name="swap_back_recents_title">Swap buttons</string>
+    <string name="swap_back_recents_summary">Swap the order of recents and back buttons</string>
 </resources>

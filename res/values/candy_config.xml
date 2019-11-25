@@ -54,6 +54,7 @@
     <string name="gestures_previous_music">Previous music</string>
     <string name="gestures_open_camera">Open camera</string>
     <string name="gestures_open_dialer">Open dialer</string>
+    <string name="gestures_custom_action">Custom action</string>
 
     <!-- Battery temp -->
     <string name="battery_temp_title">Battery temperature</string>

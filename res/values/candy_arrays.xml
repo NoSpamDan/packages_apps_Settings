@@ -35,6 +35,7 @@
         <item>@string/gestures_previous_music</item>
         <item>@string/gestures_open_camera</item>
         <item>@string/gestures_open_dialer</item>
+        <item>@string/gestures_custom_action</item>
     </string-array>
 
     <string-array name="gestures_values">
@@ -47,5 +48,24 @@
         <item>6</item>
         <item>7</item>
         <item>8</item>
+        <item>9</item>
+    </string-array>
+
+    <string-array name="notification_slider_action_entries" translatable="false">
+        <item>@string/total_silence</item>
+        <item>@string/alarms_only</item>
+        <item>@string/priority_only</item>
+        <item>@string/none</item>
+        <item>@string/vibrate</item>
+        <item>@string/ring</item>
+    </string-array>
+
+    <string-array name="notification_slider_action_entry_values" translatable="false">
+        <item>600</item>
+        <item>601</item>
+        <item>602</item>
+        <item>603</item>
+        <item>604</item>
+        <item>605</item>
     </string-array>
 </resources>
