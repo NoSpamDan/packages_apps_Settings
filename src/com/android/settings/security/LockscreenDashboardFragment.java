@@ -94,10 +94,7 @@ public class LockscreenDashboardFragment extends DashboardFragment
         use(AmbientDisplayAlwaysOnPreferenceController.class)
                 .setConfig(getConfig(context))
                 .setCallback(this::updatePreferenceStates);
-        use(AmbientDisplayNotificationsPreferenceController.class).setConfig(getConfig(context));
-        use(AmbientWakeGesturesPreferenceController.class).setConfig(getConfig(context));
         use(DoubleTapScreenPreferenceController.class).setConfig(getConfig(context));
-        use(PickupGesturePreferenceController.class).setConfig(getConfig(context));
     }
 
     @Override

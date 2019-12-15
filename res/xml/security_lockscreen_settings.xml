@@ -92,7 +92,7 @@
             android:fragment="com.android.settings.gestures.DoubleTapScreenSettings"
             settings:controller="com.android.settings.gestures.DoubleTapScreenPreferenceController" />
 
-        <Preference
+        <!--<Preference
             android:key="ambient_display_pick_up"
             android:title="@string/ambient_display_pickup_title"
             android:fragment="com.android.settings.gestures.PickupGestureSettings"
@@ -104,11 +104,26 @@
             android:summary="@string/doze_summary"
             settings:controller="com.android.settings.display.AmbientDisplayNotificationsPreferenceController" />
 
+
         <SwitchPreference
             android:key="ambient_wake_gestures"
             android:title="@string/ambient_wake_gestures_title"
             android:summary="@string/ambient_wake_gestures_summary"
-            settings:controller="com.android.settings.display.AmbientWakeGesturesPreferenceController" />
+            settings:controller="com.android.settings.display.AmbientWakeGesturesPreferenceController" />-->
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="doze_sensor"
+        android:title="@string/doze_sensor_title"
+        android:order="1001" >
+
+        <PreferenceScreen
+            android:key="doze_fragment"
+            android:icon="@drawable/ic_ambient"
+            android:title="@string/doze_display_title"
+            android:summary="@string/doze_display_summary"
+            android:fragment="org.candy.candyshop.fragments.doze.DozeSettings" />
+
     </PreferenceCategory>
 
     <!-- Work profile settings are at the bottom with high order value to avoid users thinking that
@@ -116,7 +131,7 @@
     <PreferenceCategory
         android:key="security_setting_lock_screen_notif_work_header"
         android:title="@string/profile_section_header"
-        android:order="1001"
+        android:order="1002"
         settings:searchable="false">
 
         <com.android.settings.RestrictedListPreference
