@@ -121,7 +121,8 @@ public class ImeiInfoDialogController {
 
         mDialog.setText(ID_PRL_VERSION_VALUE, getCdmaPrlVersion());
 
-        if (mSubscriptionInfo != null && isCdmaLteEnabled()) {
+        if ((mSubscriptionInfo != null && isCdmaLteEnabled()) ||
+                    (mSubscriptionInfo == null && isSimPresent(mSlotId))) {
             // Show IMEI for LTE device
             // Show ICC ID and IMEI for LTE device
             mDialog.setText(ID_IMEI_VALUE,
@@ -156,6 +157,15 @@ public class ImeiInfoDialogController {
     boolean isCdmaLteEnabled() {
         return mTelephonyManager.getLteOnCdmaMode(mSubscriptionInfo.getSubscriptionId())
                 == PhoneConstants.LTE_ON_CDMA_TRUE;
+    }
+
+    boolean isSimPresent(int slotId) {
+        final int simState = mTelephonyManager.getSimState(slotId);
+        if ((simState != TelephonyManager.SIM_STATE_ABSENT) &&
+                (simState != TelephonyManager.SIM_STATE_UNKNOWN)) {
+            return true;
+        }
+        return false;
     }
 
     @VisibleForTesting
