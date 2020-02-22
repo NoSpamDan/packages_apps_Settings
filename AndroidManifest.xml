@@ -3339,5 +3339,67 @@
         <service android:name="org.candy.candyshop.fragments.doze.DozeService"
                 android:permission="CustomDozeService">
         </service>
+
+        <!-- Navbar -->
+        <activity
+            android:name="org.candy.candyshop.navigation.BackLongPress"
+            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog.MinWidth"
+            android:label="@string/app_picker_dialog_title" >
+            <intent-filter>
+                <action android:name="org.candy.candyshop.navigation.BackLongPress" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="org.candy.candyshop.navigation.BackDoubleTap"
+            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog.MinWidth"
+            android:label="@string/app_picker_dialog_title" >
+            <intent-filter>
+                <action android:name="org.candy.candyshop.navigation.BackDoubleTap" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="org.candy.candyshop.navigation.HomeLongPress"
+            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog.MinWidth"
+            android:label="@string/app_picker_dialog_title" >
+            <intent-filter>
+                <action android:name="org.candy.candyshop.navigation.HomeLongPress" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="org.candy.candyshop.navigation.HomeDoubleTap"
+            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog.MinWidth"
+            android:label="@string/app_picker_dialog_title" >
+            <intent-filter>
+                <action android:name="org.candy.candyshop.navigation.HomeDoubleTap" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="org.candy.candyshop.navigation.AppSwitchLongPress"
+            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog.MinWidth"
+            android:label="@string/app_picker_dialog_title" >
+            <intent-filter>
+                <action android:name="org.candy.candyshop.navigation.AppSwitchLongPress" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="org.candy.candyshop.navigation.AppSwitchDoubleTap"
+            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog.MinWidth"
+            android:label="@string/app_picker_dialog_title" >
+            <intent-filter>
+                <action android:name="org.candy.candyshop.navigation.AppSwitchDoubleTap" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
     </application>
 </manifest>
