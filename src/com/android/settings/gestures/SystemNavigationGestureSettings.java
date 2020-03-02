@@ -127,12 +127,10 @@ public class SystemNavigationGestureSettings extends RadioButtonPickerFragment
 
     private VideoPreference mVideoPreference;
 
-    private Preference mTweaksPreference;
     private PreferenceCategory gestureTweaksCategory;
     private SwitchPreference gesturePillToggle;
 
     private static final String KEY_GESTURE_NAV_TWEAKS_CAT = "gesture_nav_tweaks_category";
-    private static final String KEY_GESTURE_NAV_TWEAKS_PREF = "gesture_nav_custom_options";
 
     @Override
     public void onAttach(Context context) {
@@ -162,13 +160,7 @@ public class SystemNavigationGestureSettings extends RadioButtonPickerFragment
                     R.string.navbar_gesture_pill_toggle_title));
         gesturePillToggle.setChecked(getPillToggleState(context) == 1 ? true : false);
         gesturePillToggle.setOnPreferenceChangeListener(this);
-
-        mTweaksPreference = new Preference(context);
-        mTweaksPreference.setIconSpaceReserved(true);
-        mTweaksPreference.setTitle(R.string.navbar_gesture_tweaks_pref_title);
-        mTweaksPreference.setSummary(R.string.navbar_gesture_tweaks_pref_summary);
-        mTweaksPreference.setKey(KEY_GESTURE_NAV_TWEAKS_PREF);
-        mTweaksPreference.setFragment("com.android.settings.gestures.GestureTweaksSettings");
+        gesturePillToggle.setIconSpaceReserved(true);
     }
 
     @Override
@@ -204,12 +196,10 @@ public class SystemNavigationGestureSettings extends RadioButtonPickerFragment
                     R.string.navbar_gesture_pill_toggle_summary));
             gesturePillToggle.setEnabled(true);
             screen.addPreference(gestureTweaksCategory);
-            gestureTweaksCategory.addPreference(mTweaksPreference);
         } else {
             gesturePillToggle.setSummary(getResources().getString(
                     R.string.navbar_gesture_pill_toggle_summary_disabled));
             gesturePillToggle.setEnabled(false);
-            gestureTweaksCategory.removePreference(mTweaksPreference);
             screen.removePreference(gestureTweaksCategory);
         }
         screen.addPreference(gestureTweaksCategory);
