@@ -19,17 +19,13 @@ package com.android.settings.fuelgauge;
 import static com.android.settings.fuelgauge.BatteryBroadcastReceiver.BatteryUpdateType;
 
 import android.app.settings.SettingsEnums;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.database.ContentObserver;
 import android.net.Uri;
-import android.app.AlertDialog;	
-import android.content.DialogInterface;
 import android.os.BatteryStats;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.SearchIndexableResource;
-import android.provider.Settings;
 import android.provider.Settings.Global;
 import android.text.format.Formatter;
 import android.view.Menu;
@@ -43,7 +39,6 @@ import androidx.annotation.VisibleForTesting;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.app.LoaderManager.LoaderCallbacks;
 import androidx.loader.content.Loader;
-import androidx.preference.Preference;
 
 import com.android.settings.R;
 import com.android.settings.SettingsActivity;
@@ -79,7 +74,6 @@ public class PowerUsageSummary extends PowerUsageBase implements OnLongClickList
     private static final String KEY_SCREEN_USAGE = "screen_usage";
     private static final String KEY_TIME_SINCE_LAST_FULL_CHARGE = "last_full_charge";
     private static final String KEY_BATTERY_SAVER_SUMMARY = "battery_saver_summary";
-    private static final String KEY_BATTERY_TEMP = "battery_temp";
 
     @VisibleForTesting
     static final int BATTERY_INFO_LOADER = 1;
@@ -89,15 +83,12 @@ public class PowerUsageSummary extends PowerUsageBase implements OnLongClickList
     static final int MENU_STATS_TYPE = Menu.FIRST;
     @VisibleForTesting
     static final int MENU_ADVANCED_BATTERY = Menu.FIRST + 1;
-    static final int MENU_STATS_RESET = Menu.FIRST + 2;
     public static final int DEBUG_INFO_LOADER = 3;
 
     @VisibleForTesting
     PowerGaugePreference mScreenUsagePref;
     @VisibleForTesting
     PowerGaugePreference mLastFullChargePref;
-    @VisibleForTesting
-    PowerGaugePreference mBatteryTemp;
     @VisibleForTesting
     PowerUsageFeatureProvider mPowerFeatureProvider;
     @VisibleForTesting
@@ -114,8 +105,6 @@ public class PowerUsageSummary extends PowerUsageBase implements OnLongClickList
     @VisibleForTesting
     BatteryTipPreferenceController mBatteryTipPreferenceController;
     private int mStatsType = BatteryStats.STATS_SINCE_CHARGED;
-
-    private boolean batteryTemp = false;
 
     @VisibleForTesting
     final ContentObserver mSettingsObserver = new ContentObserver(new Handler()) {
@@ -171,7 +160,6 @@ public class PowerUsageSummary extends PowerUsageBase implements OnLongClickList
         final TextView percentRemaining =
                 mBatteryLayoutPref.findViewById(R.id.battery_percent);
         final TextView summary1 = mBatteryLayoutPref.findViewById(R.id.summary1);
-        final TextView summary2 = mBatteryLayoutPref.findViewById(R.id.summary2);
         BatteryInfo oldInfo = batteryInfos.get(0);
         BatteryInfo newInfo = batteryInfos.get(1);
         percentRemaining.setText(Utils.formatPercentage(oldInfo.batteryLevel));
@@ -179,14 +167,13 @@ public class PowerUsageSummary extends PowerUsageBase implements OnLongClickList
         // set the text to the old estimate (copied from battery info). Note that this
         // can sometimes say 0 time remaining because battery stats requires the phone
         // be unplugged for a period of time before being willing ot make an estimate.
-        summary1.setText(mPowerFeatureProvider.getOldEstimateDebugString(
+        final String OldEstimateString = mPowerFeatureProvider.getOldEstimateDebugString(
                 Formatter.formatShortElapsedTime(getContext(),
-                        PowerUtil.convertUsToMs(oldInfo.remainingTimeUs))));
-
-        // for this one we can just set the string directly
-        summary2.setText(mPowerFeatureProvider.getEnhancedEstimateDebugString(
+                        PowerUtil.convertUsToMs(oldInfo.remainingTimeUs)));
+        final String NewEstimateString = mPowerFeatureProvider.getEnhancedEstimateDebugString(
                 Formatter.formatShortElapsedTime(getContext(),
-                        PowerUtil.convertUsToMs(newInfo.remainingTimeUs))));
+                        PowerUtil.convertUsToMs(newInfo.remainingTimeUs)));
+        summary1.setText(OldEstimateString + "\n" + NewEstimateString);
 
         batteryView.setBatteryLevel(oldInfo.batteryLevel);
         batteryView.setCharging(!oldInfo.discharging);
@@ -239,7 +226,6 @@ public class PowerUsageSummary extends PowerUsageBase implements OnLongClickList
         mScreenUsagePref = (PowerGaugePreference) findPreference(KEY_SCREEN_USAGE);
         mLastFullChargePref = (PowerGaugePreference) findPreference(
                 KEY_TIME_SINCE_LAST_FULL_CHARGE);
-        mBatteryTemp = (PowerGaugePreference) findPreference(KEY_BATTERY_TEMP);
         mFooterPreferenceMixin.createFooterPreference().setTitle(R.string.battery_footer_summary);
         mBatteryUtils = BatteryUtils.getInstance(getContext());
 
@@ -261,29 +247,6 @@ public class PowerUsageSummary extends PowerUsageBase implements OnLongClickList
     public void onPause() {
         getContentResolver().unregisterContentObserver(mSettingsObserver);
         super.onPause();
-    }
-
-    @Override
-    public boolean onPreferenceTreeClick(Preference preference) {
-        if (KEY_BATTERY_HEADER.equals(preference.getKey())) {
-            new SubSettingLauncher(getContext())
-                        .setDestination(PowerUsageAdvanced.class.getName())
-                        .setSourceMetricsCategory(getMetricsCategory())
-                        .setTitleRes(R.string.advanced_battery_title)
-                        .launch();
-            return true;
-        } else if (KEY_BATTERY_TEMP.equals(preference.getKey())) {
-            if (batteryTemp) {
-                mBatteryTemp.setSubtitle(
-                    com.android.internal.util.candy.CandyUtils.batteryTemperature(getContext(), false));
-                batteryTemp = false;
-            } else {
-                mBatteryTemp.setSubtitle(
-                    com.android.internal.util.candy.CandyUtils.batteryTemperature(getContext(), true));
-                batteryTemp = true;
-            }
-        }
-        return super.onPreferenceTreeClick(preference);
     }
 
     @Override
@@ -309,30 +272,9 @@ public class PowerUsageSummary extends PowerUsageBase implements OnLongClickList
                     .setAlphabeticShortcut('t');
         }
 
-        MenuItem reset = menu.add(0, MENU_STATS_RESET, 0, R.string.battery_stats_reset)
-                .setIcon(R.drawable.ic_delete)
-                .setAlphabeticShortcut('d');
-        reset.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-
         menu.add(Menu.NONE, MENU_ADVANCED_BATTERY, Menu.NONE, R.string.advanced_battery_title);
 
         super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    private void resetStats() {
-        AlertDialog dialog = new AlertDialog.Builder(getActivity())
-            .setTitle(R.string.battery_stats_reset)
-            .setMessage(R.string.battery_stats_message)
-            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    mStatsHelper.resetStatistics();
-                    refreshUi(BatteryUpdateType.MANUAL);
-                }
-            })
-            .setNegativeButton(R.string.cancel, null)
-            .create();
-        dialog.show();
     }
 
     @Override
@@ -343,9 +285,6 @@ public class PowerUsageSummary extends PowerUsageBase implements OnLongClickList
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case MENU_STATS_RESET:
-                resetStats();
-                return true;
             case MENU_STATS_TYPE:
                 if (mStatsType == BatteryStats.STATS_SINCE_CHARGED) {
                     mStatsType = BatteryStats.STATS_SINCE_UNPLUGGED;
@@ -385,8 +324,6 @@ public class PowerUsageSummary extends PowerUsageBase implements OnLongClickList
         updateLastFullChargePreference();
         mScreenUsagePref.setSubtitle(StringUtil.formatElapsedTime(getContext(),
                 mBatteryUtils.calculateScreenUsageTime(mStatsHelper), false));
-        mBatteryTemp.setSubtitle(
-                com.android.internal.util.candy.CandyUtils.batteryTemperature(getContext(), batteryTemp));
     }
 
     @VisibleForTesting
