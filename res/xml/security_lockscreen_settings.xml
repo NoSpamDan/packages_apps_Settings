@@ -102,7 +102,14 @@
             android:key="ambient_display_notification"
             android:title="@string/doze_title"
             android:summary="@string/doze_summary"
-            settings:controller="com.android.settings.display.AmbientDisplayNotificationsPreferenceController" />
+            settings:controller="com.android.settings.display.AmbientDisplayNotificationsPreferenceController" />-->
+
+        <PreferenceScreen
+            android:key="doze_fragment"
+            android:icon="@drawable/ic_ambient"
+            android:title="@string/doze_display_title"
+            android:summary="@string/doze_display_summary"
+            android:fragment="org.candy.candyshop.fragments.DozeSettings" />
 
 
         <SwitchPreference
