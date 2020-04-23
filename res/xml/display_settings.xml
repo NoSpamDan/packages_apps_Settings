@@ -161,21 +161,6 @@
         android:title="@string/display_vr_pref_title"
         android:fragment="com.android.settings.display.VrDisplayPreferencePicker" />
 
-    <Preference
-        android:key="global_actions"
-        android:title="@string/global_actions_title"
-        android:summary="@string/global_actions_summary"
-        android:fragment="com.android.settings.candy.GlobalActionsSettings"
-        settings:allowDividerAbove="true" />
-
-<!--
-    <com.android.settings.candy.SystemSettingSwitchPreference
-        android:key="advanced_reboot"
-        android:title="@string/global_actions_advanced_reboot_title"
-        android:summary="@string/global_actions_advanced_reboot_summary"
-        android:defaultValue="true" />
--->
-
     <PreferenceCategory
         android:key="density_category"
         android:title="@string/density_category">
