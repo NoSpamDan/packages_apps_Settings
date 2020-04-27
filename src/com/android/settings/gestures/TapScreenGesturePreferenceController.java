@@ -20,6 +20,7 @@ import static android.provider.Settings.Secure.DOZE_TAP_SCREEN_GESTURE;
 
 import android.annotation.UserIdInt;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.hardware.display.AmbientDisplayConfiguration;
 import android.os.UserHandle;
 import android.provider.Settings;
@@ -45,12 +46,7 @@ public class TapScreenGesturePreferenceController extends GesturePreferenceContr
 
     @Override
     public int getAvailabilityStatus() {
-        // No hardware support for this Gesture
-        if (!getAmbientConfig().tapSensorAvailable()) {
-            return UNSUPPORTED_ON_DEVICE;
-        }
-
-        return AVAILABLE;
+        return UNSUPPORTED_ON_DEVICE;
     }
 
     @Override

@@ -73,7 +73,7 @@
             android:title="@string/doze_on_charge_title"
             android:summary="@string/doze_on_charge_summary" />
 
-        <Preference
+        <!--<Preference
             android:key="ambient_display_tap"
             android:title="@string/ambient_display_tap_screen_title"
             android:fragment="com.android.settings.gestures.TapScreenGestureSettings"
@@ -92,29 +92,30 @@
             android:fragment="com.android.settings.gestures.DoubleTapScreenSettings"
             settings:controller="com.android.settings.gestures.DoubleTapScreenPreferenceController" />
 
-        <!--<Preference
+        <Preference
             android:key="ambient_display_pick_up"
             android:title="@string/ambient_display_pickup_title"
             android:fragment="com.android.settings.gestures.PickupGestureSettings"
-            settings:controller="com.android.settings.gestures.PickupGesturePreferenceController" />
+            settings:controller="com.android.settings.gestures.PickupGesturePreferenceController" />-->
 
-        <SwitchPreference
+        <org.candy.candyshop.preference.SecureSettingSwitchPreference
             android:key="ambient_display_notification"
             android:title="@string/doze_title"
             android:summary="@string/doze_summary"
-            settings:controller="com.android.settings.display.AmbientDisplayNotificationsPreferenceController" />
+            android:defaultValue="true" />
 
+        <org.candy.candyshop.preference.SecureSettingSwitchPreference
+            android:key="double_tap_to_wake"
+            android:title="@string/tap_to_wake"
+            android:summary="@string/tap_to_wake_summary"
+            android:defaultValue="true" />
+
+        <!-- Pulse ambient vs full lockscreen on wake -->
         <SwitchPreference
             android:key="ambient_wake_gestures"
             android:title="@string/ambient_wake_gestures_title"
             android:summary="@string/ambient_wake_gestures_summary"
-            settings:controller="com.android.settings.display.AmbientWakeGesturesPreferenceController" />-->
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:key="doze_sensor"
-        android:title="@string/doze_sensor_title"
-        android:order="1001" >
+            settings:controller="com.android.settings.display.AmbientWakeGesturesPreferenceController" />
 
         <PreferenceScreen
             android:key="doze_fragment"
@@ -125,12 +126,13 @@
 
     </PreferenceCategory>
 
+
     <!-- Work profile settings are at the bottom with high order value to avoid users thinking that
          any of the above settings (including dynamic) are specific to the work profile. -->
     <PreferenceCategory
         android:key="security_setting_lock_screen_notif_work_header"
         android:title="@string/profile_section_header"
-        android:order="1002"
+        android:order="1001"
         settings:searchable="false">
 
         <com.android.settings.RestrictedListPreference
