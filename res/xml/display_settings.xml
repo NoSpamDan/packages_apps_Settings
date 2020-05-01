@@ -124,12 +124,6 @@
         android:fragment="com.android.settings.dream.DreamSettings"
         settings:searchable="false" />
 
-    <Preference
-        android:key="lockscreen_from_display_settings"
-        android:title="@string/lockscreen_settings_title"
-        android:fragment="com.android.settings.security.LockscreenDashboardFragment"
-        settings:controller="com.android.settings.security.screenlock.LockScreenPreferenceController" />
-
     <SwitchPreference
         android:key="camera_gesture"
         android:title="@string/camera_gesture_title"
@@ -139,10 +133,16 @@
         android:key="lift_to_wake"
         android:title="@string/lift_to_wake_title" />
 
-    <SwitchPreference
+    <!--<SwitchPreference
         android:key="tap_to_wake"
         android:title="@string/tap_to_wake"
-        android:summary="@string/tap_to_wake_summary" />
+        android:summary="@string/tap_to_wake_summary" />-->
+
+    <Preference
+        android:key="lockscreen_from_display_settings"
+        android:title="@string/lockscreen_settings_title"
+        android:fragment="com.android.settings.security.LockscreenDashboardFragment"
+        settings:controller="com.android.settings.security.screenlock.LockScreenPreferenceController" />
 
     <Preference
         android:key="display_cutout_force_fullscreen_settings"

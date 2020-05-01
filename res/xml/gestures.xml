@@ -63,11 +63,11 @@
         android:fragment="com.android.settings.gestures.DoubleTapScreenSettings"
         settings:controller="com.android.settings.gestures.DoubleTapScreenPreferenceController" />
 
-    <Preference
+    <!--<Preference
         android:key="gesture_pick_up_input_summary"
         android:title="@string/ambient_display_pickup_title"
         android:fragment="com.android.settings.gestures.PickupGestureSettings"
-        settings:controller="com.android.settings.gestures.PickupGesturePreferenceController" />
+        settings:controller="com.android.settings.gestures.PickupGesturePreferenceController" />-->
 
     <Preference
         android:key="gesture_prevent_ringing_summary"
