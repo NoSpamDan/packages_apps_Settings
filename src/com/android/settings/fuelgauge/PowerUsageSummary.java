@@ -259,8 +259,8 @@ public class PowerUsageSummary extends PowerUsageBase implements OnLongClickList
                         .launch();
             return true;
         } else if (KEY_BATTERY_TEMP.equals(preference.getKey())) {
-            updateBatteryTempPreference();
-        } 
+            toggleBatteryTempUnits();
+        }
         return super.onPreferenceTreeClick(preference);
     }
 
@@ -391,13 +391,29 @@ public class PowerUsageSummary extends PowerUsageBase implements OnLongClickList
 
     @VisibleForTesting
     void updateBatteryTempPreference() {
+        final Context context = getContext();
+        boolean mUseForC = CandyUtils.mccCheck(context);
+        if (mUseForC) {
+            mBatteryTemp.setSubtitle(
+                CandyUtils.batteryTemperature(context, true));
+            batteryTemp = true;
+        } else {
+            mBatteryTemp.setSubtitle(
+                CandyUtils.batteryTemperature(context, mUseForC));
+            batteryTemp = true;
+        }
+    }
+
+    @VisibleForTesting
+    void toggleBatteryTempUnits() {
+        final Context context = getContext();
         if (batteryTemp) {
             mBatteryTemp.setSubtitle(
-                CandyUtils.batteryTemperature(getContext(), false));
+                CandyUtils.batteryTemperature(context, false));
             batteryTemp = false;
         } else {
             mBatteryTemp.setSubtitle(
-                CandyUtils.batteryTemperature(getContext(), true));
+                CandyUtils.batteryTemperature(context, true));
             batteryTemp = true;
         }
     }
