@@ -62,4 +62,20 @@
     <string name="doubletap_lockscreen_title">Doppio tap lockscreen per spegnere</string>
     <string name="doubletap_lockscreen_summary">Doppio tap in un\'area vuota della lockscreen per spegnere lo schermo</string>
 
+<<<<<<< HEAD
+=======
+    <string name="battery_light_settings_pref_title">Led batteria</string>
+    <string name="battery_light_allow_on_dnd_title">Led batteria in modalità Non Disturbare</string>
+    <string name="battery_light_low_blinking_title">Led lampeggiante per carica bassa</string>
+    <string name="battery_light_cat">Led batteria durante ricarica</string>
+    <string name="battery_light_low_color">Carica bassa</string>
+    <string name="battery_light_medium_color">Carica media</string>
+    <string name="battery_light_full_color">Quasi carico</string>
+    <string name="battery_light_reallyfull_color">Completamente carico (100)</string>
+
+    <string name="smallest_tick_label">Off</string>
+    <string name="greatest_tick_label">Metà schermo</string>
+    <string name="gesture_back_deadzone_label">Zona morta</string>
+    <string name="back_sensitivity_dialog_message_cust">\nUsa le prime due seekbar per configurare la sensibilità dello swipe indietro, la terza seekbar per impostare una zona morta nella parte superiore dello schermo, per evitare conflitti con i gesti delle app.</string>
+>>>>>>> a00e620ae5... Gestures: allow to set back swipe deadzone [2/2]
 </resources>
