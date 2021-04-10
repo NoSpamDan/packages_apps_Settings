@@ -36,13 +36,13 @@
         android:title="@string/lockpattern_settings_enable_dots_title"/>
 
     <!-- available in pin -->
-    <org.candy.support.preferences.SystemSettingSwitchPreference
+    <org.candy.support.preferences.SwitchPreference
         android:key="lockscreen_scramble_pin_layout"
         android:title="@string/unlock_scramble_pin_layout_title"
         android:summary="@string/unlock_scramble_pin_layout_summary" />
 
     <!-- available in pin/password -->
-    <org.candy.support.preferences.SystemSettingSwitchPreference
+    <org.candy.support.preferences.SwitchPreference
         android:key="lockscreen_quick_unlock_control"
         android:title="@string/unlock_quick_unlock_control_title"
         android:summary="@string/unlock_quick_unlock_control_summary" />

@@ -32,7 +32,7 @@ import com.android.settings.overlay.FeatureFactory;
 import com.android.settings.security.trustagent.TrustAgentManager;
 import com.android.settingslib.core.AbstractPreferenceController;
 
-import org.candy.support.preferences.SystemSettingSwitchPreference;
+import org.candy.support.preferences.SwitchPreference;
 
 public class QuickUnlockPreferenceController extends AbstractPreferenceController
         implements PreferenceControllerMixin, Preference.OnPreferenceChangeListener {
@@ -72,7 +72,7 @@ public class QuickUnlockPreferenceController extends AbstractPreferenceControlle
     public void updateState(Preference preference) {
         int value = Settings.System.getInt(
                 mContext.getContentResolver(), Settings.System.LOCKSCREEN_QUICK_UNLOCK_CONTROL, 0);
-        ((SystemSettingSwitchPreference) preference).setChecked(value != 0);
+        ((SwitchPreference) preference).setChecked(value != 0);
     }
 
     @Override
