@@ -30,7 +30,7 @@
         android:entryValues="@array/data_usage_period_values"
         android:defaultValue="1" />
 
-    <org.candy.candyshop.preference.SwitchPreference
+    <org.candy.support.preferences.SwitchPreference
         android:key="set_data_warning"
         android:title="@string/set_data_warning"/>
 
